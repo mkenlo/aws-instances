@@ -18,6 +18,7 @@ angular.module('awsKeyApiApp',[])
 				.then(function(result){
 					if (result.data.status != "ERROR"){
 						$scope.reservationList = result.data.result.Reservations;
+						saveInstances(result.data.result.Reservations);
 						$scope.responseStatus="Request Status: 200, Ok";
 						$scope.responseAlert = "success";						
 					}
@@ -25,12 +26,24 @@ angular.module('awsKeyApiApp',[])
 						$scope.responseStatus=result.data.message;						
 						$scope.responseAlert = "danger";
 					}
-				})
-				.catch(function(error){
-					$scope.responseStatus = error;
-					$scope.responseAlert = "danger";
 				});
 				
+				
 		};
+
+		function saveInstances(reservationList){
+			var send_to_save = function(){
+				$http.post('/saveInstances', 
+					{"datalist":reservationList}
+					).then(function(result){
+						console.log(result.message);	
+					}).catch(function(error){
+						console.log(error);
+					});
+
+
+			};
+			send_to_save();
+		}
 		
 	});

@@ -1,6 +1,7 @@
 from flask import Flask, render_template, jsonify, request
 import boto3
 import json
+import model
 
 
 app = Flask(__name__)
@@ -23,14 +24,30 @@ def getInstances():
             region_name='us-east-1')
         response = client.describe_instances(
             MaxResults=10, DryRun=False)
-        print response
         return jsonify(result=response)
 
     except Exception, e:
         return jsonify(status='ERROR', message=str(e))
 
 
+@app.route("/saveInstances", methods=['POST'])
+def saveInstances():
+    try:
+        reservationList = json.loads(request.data.decode())
+        print reservationList
+        model.addInstancesBundle(reservationList['datalist'])
+        return jsonify(status="OK", message="Instances saved")
+    except Exception, e:
+        print str(e)
+        return jsonify(status='ERROR', message=str(e))
+
+
+@app.route("/allInstances", methods=["GET"])
+def getAllInstances():
+    return jsonify(result=model.getAllInstances())
+
+
 if __name__ == '__main__':
     app.secret_key = 'secret_12345678_key'
     app.debug = True
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0', port=5001)
