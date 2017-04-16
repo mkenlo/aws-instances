@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>AWS Instances</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <link href="static/main.css" rel="stylesheet"  >
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+  </head>
+  <body ng-app="awsKeyApiApp" ng-controller="awsKeyApiCtrl">
+    <nav id="menu" class="navbar navbar-default navbar-top">
+        <div class="container-fluid">        
+            <h1>Get all instances associated with AWS API Keys</h1>                   
+        </div>  
+    </nav>
+
+   <section>
+	   <form ng-submit="getInstances()">
+		  <div class="form-group">    
+			<label for="apikey"> Access Key</label>    
+			<input type="text"  class="form-control" placeholder="access key id" id="apikey" name="apikey" ng-model="apikey" >
+		  </div>
+		  <div class="form-group">
+		    <label for="secretkey">Secret Key</label>
+			<input type="text" class="form-control" id="secretkey" placeholder="secret access key" ng-model="secretkey">
+		  </div>		  
+		  <button class="btn btn-primary" type="submit">Get instances</button>
+	</form>
+   </section>
+   <section>
+   {% raw %}
+   <div class="alert alert-{{responseAlert}}" role="alert">
+   		<p ng-bind="responseStatus"></p>
+   </div>
+   {% endraw %}
+   </section>
+
+   <section>
+   <div class="row">
+        <div class="col-md-12 col-sm-12">
+
+        <span ng-init="iter = 0"></span>
+
+        <div class="panel panel-default">
+          <div class="panel-heading">List of instances</div>
+          
+          <table class="table">
+            <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Instance Id</th>
+                  <th>Instance Type</th>
+                  <th>Architecture</th>
+                  <th>Status</th>
+                </tr>
+              </thead> 
+              <tbody ng-repeat="reservation in reservationList" >
+                
+                {% raw %}
+                <tr ng-repeat = "instance in reservation.Instances">
+                	<td>{{iter+1}}</td>
+                  	<td>{{instance.InstanceId}}</td>
+                	<td>{{instance.InstanceType}}</td>
+                	<td>{{instance.Architecture}}</td>
+                	<td>{{instance.State.Name}}</td>
+                </tr>
+                {% endraw %}
+              </tbody>
+          </table>
+        </div>            
+        </div>
+    </div>
+
+   </section>
+    <footer>
+        <p>Copyrigth 2017<span  class="pull-right">Developed by <a href="">@mkenlo</a></span></p>
+    </footer>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script src="static/app.js"></script>
+  </body>
+</html>

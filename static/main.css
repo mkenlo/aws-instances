@@ -1,0 +1,50 @@
+/**
+Main files CSS
+Author: @mkenlo
+*/
+body{
+	font-family: 'Open sans', serif;
+	font-size: 16px;
+}
+h1 {
+	font-weight:normal;
+	font-size: 30px;
+	text-align: center;
+	color: #FFA000;
+	margin: 0;
+	padding: 0;
+}
+h2 {
+	font-family:"Arvo";
+	font-weight: normal;
+	font-size: 18px;
+	text-align: center;
+	color: #fff;
+	margin: 0;
+	padding: 0;
+}
+nav#menu{
+	height: 80px;
+	padding: 20px 10px;
+	background: #212121;
+	color:#fff;
+}
+section {
+  max-width: 750px;
+  margin: 50px 100px ;
+}
+
+
+footer {
+	margin-top: 50px;
+	padding:20px;
+	
+}
+
+
+
+
+
+
+
+
