@@ -49,10 +49,8 @@
 
    <section>
    <div class="row">
-        <div class="col-md-12 col-sm-12">
-
+        <div class="col-md-12 col-sm-12" ng-if="reservationList.length">
         <span ng-init="iter = 0"></span>
-
         <div class="panel panel-default">
           <div class="panel-heading">List of instances</div>
           
@@ -83,6 +81,37 @@
         </div>
     </div>
 
+   </section>
+   <section>
+     {% raw %}
+     <div class="row">
+        <div class="col-md-12 col-sm-12" ng-if="savedInstances.length">        
+        <div class="panel panel-success">
+          <div class="panel-heading">Saved instances</div>
+          <table class="table">
+            <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Instance Id</th>
+                  <th>Instance Type</th>
+                  <th>Architecture</th>
+                  <th>Status</th>
+                </tr>
+              </thead> 
+              <tbody >
+                <tr ng-repeat = "instance in savedInstances">
+                  <td>{{instance.id}}</td>
+                  <td>{{instance.instanceId}}</td>
+                  <td>{{instance.instanceType}}</td>
+                  <td>{{instance.architecture}}</td>
+                  <td>{{instance.status}}</td>
+                </tr>
+              </tbody>
+          </table>
+        </div>            
+        </div>
+    </div>
+     {% endraw %}
    </section>
     <footer>
         <p>Copyrigth 2017<span  class="pull-right">Developed by <a href="">@mkenlo</a></span></p>

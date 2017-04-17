@@ -13,6 +13,16 @@ class Instances(Base):
     instanceType = Column(String(250), nullable=False)
     architecture = Column(String(250), nullable=False)
     status = Column(String(250), nullable=False)
+    @property
+    def serialize(self):
+        """Return object data in easily serializeable format"""
+        return {
+            'id': self.id,
+            'instanceId': self.instanceId,
+            'instanceType': self.instanceType,
+            'architecture': self.architecture,
+            'status':self.status
+        }
 
 
 engine = create_engine(buildConnector())

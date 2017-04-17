@@ -4,7 +4,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 # connect with the database
-engine = create_engine("postgresql://postgres:admin@localhost/aws-instances")
+engine = create_engine(buildConnector())
 
 Base.metadata.bind = engine
 DBSession = sessionmaker(bind=engine)
@@ -16,6 +16,7 @@ session = DBSession()
 
 def addInstance(instance):
     # check if instance already exists
+    print instance
     if not getOneInstance(instance["InstanceId"]):
         new_instance = Instances(instanceId=instance["InstanceId"],
                                  instanceType=instance["InstanceType"],
@@ -43,4 +44,4 @@ def getAllInstances():
 
 
 def getOneInstance(instanceId):
-    return session.query(Instances).filter_by(instanceId=instance).all()
+    return session.query(Instances).filter_by(instanceId=instanceId).all()

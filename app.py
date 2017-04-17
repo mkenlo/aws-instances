@@ -34,17 +34,16 @@ def getInstances():
 def saveInstances():
     try:
         reservationList = json.loads(request.data.decode())
-        print reservationList
         model.addInstancesBundle(reservationList['datalist'])
         return jsonify(status="OK", message="Instances saved")
     except Exception, e:
-        print str(e)
         return jsonify(status='ERROR', message=str(e))
 
 
 @app.route("/allInstances", methods=["GET"])
 def getAllInstances():
-    return jsonify(result=model.getAllInstances())
+    instances = model.getAllInstances()
+    return jsonify(instancesItems=[i.serialize for i in instances])
 
 
 if __name__ == '__main__':
